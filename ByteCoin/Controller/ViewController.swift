@@ -10,21 +10,51 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var pickerView: UIPickerView!
+    @IBOutlet weak var currentBitLabel: UILabel!
+    @IBOutlet weak var currencyLabel: UILabel!
+     let coinManager = CoinManager()
     override func viewDidLoad() {
         super.viewDidLoad()
+        pickerView.dataSource = self
+        pickerView.delegate = self
 
         // Do any additional setup after loading the view.
     }
     
 
-    /*
-    // MARK: - Navigation
+    
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+}
+
+ //MARK:- UIPickerViewDataSource
+extension ViewController : UIPickerViewDataSource{
+    
+//    Now let’s actually provide the data and add the implementation for the first method numberOfComponents(in:) to determine how many columns we want in our picker.
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        //only one column
+        return 1
     }
-    */
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        //number of rows from the array
+        return coinManager.currencyArray.count
+    }
+    
+    
+}
 
+ //MARK:- UIPickerViewDelegate
+extension ViewController :UIPickerViewDelegate{
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        // getting the title from the array for each row
+        
+        return coinManager.currencyArray[row]
+    }
+    
+    // in this method will tell us which is the current selected row so from here we will perform request
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        let currentCurrency = coinManager.currencyArray[row]
+        print(currentCurrency)
+    }
 }
