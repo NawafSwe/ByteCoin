@@ -27,12 +27,13 @@ struct CoinManager {
     let currencyArray = ["AUD", "BRL","CAD","CNY","EUR","GBP","HKD","IDR","ILS","INR","JPY","MXN","NOK","NZD","PLN","RON","RUB","SEK","SGD","USD","ZAR"]
     
     
-    
+    //method for preparing the url for the request
     func getCoinPrice(for currency:String){
         let urlString = "\(baseURL)\(currency)?apikey=\(apiKey)&"
         performRequest(with: urlString)
     }
     
+    //method for http request
     func performRequest(with urlString: String){
         //first step create a URL
         if let url = URL(string: urlString){
@@ -66,12 +67,13 @@ struct CoinManager {
         }
     }
     
+    //method for parsing data
     func parseJson(_ currencyData: Data)->CurrencyModel?{
         let decoder = JSONDecoder()
         do{
             let decodedData = try decoder.decode(CurrencyModel.self, from: currencyData)
             let rate = decodedData.rate
-         
+            
             let currencyModel = CurrencyModel(rate: rate)
             return currencyModel
         }catch let error{

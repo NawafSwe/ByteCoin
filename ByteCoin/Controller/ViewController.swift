@@ -17,11 +17,14 @@ class ViewController: UIViewController {
     var coinManager = CoinManager()
     override func viewDidLoad() {
         super.viewDidLoad()
+        //setting dataSource
         pickerView.dataSource = self
+        //setting delegate for the pickerView
         pickerView.delegate = self
+        
+        //setting custom delegate for updating the UI
         coinManager.delegate = self
         
-        // Do any additional setup after loading the view.
     }
     
     
@@ -38,8 +41,8 @@ extension ViewController : UIPickerViewDataSource{
         return 1
     }
     
+    //determine number of rows from the array
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        //number of rows from the array
         return coinManager.currencyArray.count
     }
     
@@ -61,6 +64,9 @@ extension ViewController :UIPickerViewDelegate{
     }
 }
 
+//MARK:- CoinManagerDelegate
+
+//custom delegate for updating the ui
 extension ViewController : CoinManagerDelegate{
     func didUpdateCurrency(_ coinManager: CoinManager, currency: CurrencyModel) {
         //updating the UI
@@ -70,6 +76,7 @@ extension ViewController : CoinManagerDelegate{
         }
     }
     
+    // if there is an error while parsing 
     func didFailWithError(_ coinManager: CoinManager, error: Error!) {
         if let err = error {
             print("error happen \(err)")
