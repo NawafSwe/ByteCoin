@@ -50,7 +50,7 @@ extension ViewController : UIPickerViewDataSource{
 extension ViewController :UIPickerViewDelegate{
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         // getting the title from the array for each row
-        
+        currentBitLabel.text = coinManager.currencyArray[row]
         return coinManager.currencyArray[row]
     }
     
@@ -63,7 +63,11 @@ extension ViewController :UIPickerViewDelegate{
 
 extension ViewController : CoinManagerDelegate{
     func didUpdateCurrency(_ coinManager: CoinManager, currency: CurrencyModel) {
-        print(currency.rate)
+        //updating the UI
+        DispatchQueue.main.async{
+            self.currencyLabel.text = currency.rateString
+            
+        }
     }
     
     func didFailWithError(_ coinManager: CoinManager, error: Error!) {

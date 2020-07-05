@@ -11,4 +11,5 @@ import Foundation
 struct CurrencyModel :Codable {
     let rate : Double
     var rateString : String{return String(format: "%.1f", self.rate)}
+    
 }

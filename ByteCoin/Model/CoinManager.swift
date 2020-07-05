@@ -44,6 +44,8 @@ struct CoinManager {
                 //checking if there is an error
                 if  error != nil {
                     print("error found : \(error!)")
+                    self.delegate?.didFailWithError(self,error:error!)
+                    
                     return
                 }
                 //checking if the data is safe
@@ -69,6 +71,7 @@ struct CoinManager {
         do{
             let decodedData = try decoder.decode(CurrencyModel.self, from: currencyData)
             let rate = decodedData.rate
+         
             let currencyModel = CurrencyModel(rate: rate)
             return currencyModel
         }catch let error{
